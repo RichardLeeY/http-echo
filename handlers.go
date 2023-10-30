@@ -25,6 +25,7 @@ func withAppHeaders(c int, h http.HandlerFunc) http.HandlerFunc {
 	return func(w http.ResponseWriter, r *http.Request) {
 		w.Header().Set(httpHeaderAppName, version.Name)
 		w.Header().Set(httpHeaderAppVersion, version.Version)
+		http.SetCookie(w, &http.Cookie{Name: "richard-test", Value: "test", Path: "/",MaxAge: 3600,HttpOnly: false,Secure: true,SameSite: http.SameSiteNoneMode})
 		w.WriteHeader(c)
 		h(w, r)
 	}
